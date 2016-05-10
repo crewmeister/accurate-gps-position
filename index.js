@@ -7,27 +7,28 @@ var options = {
   maxWait: 10000,
   desiredAccuracy: 70
 };
-document.getElementById('start').innerHTML = new Date() + '\nCalled with options:\n' + JSON.stringify(options, null, 4);
+document.getElementById('start').innerHTML = new Date() + '\nCalled with options:\n' + JSON.stringify(options, null, 4) + '\n';
 
-function stringifyObj(coords) {
+var stringifyObj = function stringifyObj(coords) {
   var obj = {};
   for (var key in coords) {
     obj[key] = coords[key];
   }
   return JSON.stringify(obj, null, 4);
-}
+};
 
-function inProgress(pos) {
+var inProgress = function inProgress(pos) {
   document.getElementById('progress').innerHTML += new Date() + '\n' + stringifyObj(pos.coords) + '\n';
-}
+};
 
-function onSuccess(pos) {
+var onSuccess = function onSuccess(pos) {
   document.getElementById('result').innerHTML = new Date() + '\n' + stringifyObj(pos.coords);
-}
+};
 
-function onError(err) {
+var onError = function onError(err) {
   document.getElementById('error').innerHTML = stringifyObj(err);
-}
+};
+
 (0, _index.accurateCurrentPosition)(onSuccess, onError, inProgress, options);
 
 },{"../src/index":2}],2:[function(require,module,exports){
