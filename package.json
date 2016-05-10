@@ -6,11 +6,16 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register src/*spec.js src/**/*spec.js --bail --reporter=dot --slow=1",
     "watch:test": "npm run test -- --watch",
-    "start": "npm run build:watch",
-    "_start:js": "mkdir -p dist; watchify --transform=babelify --outfile=dist/index.js src/index.js --verbose",
-    "_start:html": "chokidar --initial 'src/index.html' -c 'npm run _build:html'",
-    "build": "mkdir -p ./dist; cp ./example/index.html dist/; cp src/index.js dist/",
-    "postbuild": "uglifyjs dist/index.js -m -c > dist/index.min.js",
+    "_create-dist-dir": "mkdir -p dist",
+    "prestart": "npm run _create-dist-dir",
+    "start": "concurrently 'npm run _start:js' 'npm run _start:example'",
+    "_start:js": "watchify --transform=babelify --outfile=dist/index.js src/index.js --verbose",
+    "_start:example": "chokidar --initial 'example/*' -c 'npm run _build:example'",
+    "prebuild": "npm run _create-dist-dir",
+    "build": "npm run _build:js && npm run _build:example",
+    "_build:js": "browserify src/index.js --transform=babelify --outfile=dist/index.js && npm run _minify-js",
+    "_build:example": "rm -r dist/*.html 2>> /dev/null; cp -r example/*.html dist",
+    "_minify-js": "uglifyjs dist/index.js -m -c > dist/index.min.js",
     "watch:build": "nodemon --watch src --watch example --ext js,html,css --exec npm run build"
   },
   "repository": {
@@ -29,6 +34,9 @@
   "devDependencies": {
     "nodemon": "^1.9.2",
     "uglify-js": "^2.6.2",
+    "concurrently": "^2.0.0",
+    "chokidar": "^1.4.3",
+    "chokidar-cli": "^1.2.0",
     "babel-cli": "^6.7.7",
     "babel-core": "^6.7.7",
     "babel-plugin-transform-react-jsx": "^6.7.5",
