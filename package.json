@@ -4,7 +4,10 @@
   "description": "Accurate GPS position retreival",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha test"
+    "start": "npm run build:watch",
+    "test": "",
+    "build": "mkdir -p ./dist; cp ./example/index.html dist/; cp src/index.js dist/",
+    "build:watch": "nodemon --watch src --watch example --ext js,html,css --exec npm run build"
   },
   "repository": {
     "type": "git",
@@ -18,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/crewmeister/accurateGpsPosition/issues"
   },
-  "homepage": "https://github.com/crewmeister/accurateGpsPosition#readme"
+  "homepage": "https://github.com/crewmeister/accurateGpsPosition#readme",
+  "devDependencies": {
+    "nodemon": "^1.9.2"
+  }
 }
