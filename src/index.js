@@ -1,37 +1,38 @@
 const _accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogress, options) => {
-  var lastCheckedPosition,
-    locationEventCount = 0,
-    watchID,
-    timerID;
+  const geolocation = navigator.geolocation;
+  let lastCheckedPosition;
+  let locationEventCount = 0;
+  let watchID;
+  let timerID;
 
   options = options || {};
 
-  var checkLocation = function(position) {
+  const checkLocation = (position) => {
     lastCheckedPosition = position;
     locationEventCount = locationEventCount + 1;
     // We ignore the first event unless it's the only one received because some devices seem to send a cached
     // location even when maxaimumAge is set to zero
     if ((position.coords.accuracy <= options.desiredAccuracy) && (locationEventCount > 1)) {
       clearTimeout(timerID);
-      navigator.geolocation.clearWatch(watchID);
+      geolocation.clearWatch(watchID);
       foundPosition(position);
     } else {
       geoprogress(position);
     }
   };
 
-  var stopTrying = function() {
-    navigator.geolocation.clearWatch(watchID);
+  const stopTrying = () => {
+    geolocation.clearWatch(watchID);
     foundPosition(lastCheckedPosition);
   };
 
-  var onError = function(error) {
+  const onError = (error) => {
     clearTimeout(timerID);
-    navigator.geolocation.clearWatch(watchID);
+    geolocation.clearWatch(watchID);
     geolocationError(error);
   };
 
-  var foundPosition = function(position) {
+  const foundPosition = (position) => {
     geolocationSuccess(position);
   };
 
@@ -48,7 +49,7 @@ const _accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogr
   options.maximumAge = 0; // Force current locations only
   options.enableHighAccuracy = true; // Force high accuracy (otherwise, why are you using this function?)
 
-  watchID = navigator.geolocation.watchPosition(checkLocation, onError, options);
+  watchID = geolocation.watchPosition(checkLocation, onError, options);
   timerID = setTimeout(stopTrying, options.maxWait); // Set a timeout that will abandon the location loop
 };
 
