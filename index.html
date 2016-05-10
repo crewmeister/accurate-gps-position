@@ -14,6 +14,9 @@
 <h2>Result</h2>
 <pre id="result"></pre>
 
+<h2>Error?</h2>
+<pre id="error" style="color: red;">not yet...</pre>
+
 <script>
   
   var options = {
@@ -34,11 +37,13 @@
     document.getElementById('progress').innerHTML += new Date() + '\n' + stringifyCoords(pos.coords) + '\n';
   }
 
-  function printResult(pos) {
+  function onSuccess(pos) {
     document.getElementById('result').innerHTML = new Date() + '\n' + stringifyCoords(pos.coords);
   }
-  var onSuccess = printResult;
-  var onError = printResult;
+  
+  function onError(err) {
+    document.getElementById('error').innerHTML = ''+err;
+  }
   navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, inProgress, options);
 </script>
 </body>
