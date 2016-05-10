@@ -7,6 +7,7 @@
     "start": "npm run build:watch",
     "test": "",
     "build": "mkdir -p ./dist; cp ./example/index.html dist/; cp src/index.js dist/",
+    "postbuild": "uglifyjs dist/index.js -m -c > dist/index.min.js && rm dist/index.js",
     "build:watch": "nodemon --watch src --watch example --ext js,html,css --exec npm run build"
   },
   "repository": {
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/crewmeister/accurateGpsPosition#readme",
   "devDependencies": {
-    "nodemon": "^1.9.2"
+    "nodemon": "^1.9.2",
+    "uglify-js": "^2.6.2"
   }
 }
