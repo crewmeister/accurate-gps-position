@@ -1,4 +1,4 @@
-navigator.geolocation.getAccurateCurrentPosition = function (geolocationSuccess, geolocationError, geoprogress, options) {
+export const accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogress, options) => {
     var lastCheckedPosition,
         locationEventCount = 0,
         watchID,
