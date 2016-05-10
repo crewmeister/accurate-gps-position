@@ -1,13 +1,16 @@
 import {
   promiseThat,
-  fulfills
+  fulfilled
 } from 'hamjest';
 
 import { accurateCurrentPosition } from './index';
 
+const successfulPosition = () =>
+  accurateCurrentPosition();
+
 describe('`accurateCurrentPosition()`', () => {
   it('returns a promise', () => promiseThat(
-    accurateCurrentPosition(), fulfills())
+    successfulPosition(), fulfilled())
   );
   
 });

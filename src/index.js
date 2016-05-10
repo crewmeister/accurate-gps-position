@@ -1,4 +1,4 @@
-export const accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogress, options) => {
+const _accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogress, options) => {
     var lastCheckedPosition,
         locationEventCount = 0,
         watchID,
@@ -45,3 +45,6 @@ export const accurateCurrentPosition = (geolocationSuccess, geolocationError, ge
     watchID = navigator.geolocation.watchPosition(checkLocation, onError, options);
     timerID = setTimeout(stopTrying, options.maxWait); // Set a timeout that will abandon the location loop
 };
+
+export const accurateCurrentPosition = () =>
+  Promise.resolve();
