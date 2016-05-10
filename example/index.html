@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Accurate GPS position</title>
+  <script src="../src/index.js"></script>
+</head>
+<body>
+<h1>Accurate GPS Position</h1>
+<pre id="start"></pre>
+
+<h2>Progress</h2>
+<pre id="progress"></pre>
+
+<h2>Result</h2>
+<pre id="result"></pre>
+
+<script>
+  
+  const options = {
+    maxWait: 60000,
+    desiredAccuracy: 10,
+  };
+  document.getElementById('start').innerHTML = new Date() + '\nCalled with options:\n' + JSON.stringify(options, null, 4);
+
+  function stringifyCoords(coords) {
+    var obj = {};
+    for (var key in coords) {
+      obj[key] = coords[key];
+    }
+    return JSON.stringify(obj, null, 4);
+  }
+  
+  function inProgress(pos) {
+    document.getElementById('progress').innerHTML += new Date() + '\n' + stringifyCoords(pos.coords) + '\n';
+  }
+
+  function printResult(pos) {
+    document.getElementById('result').innerHTML = new Date() + '\n' + stringifyCoords(pos.coords);
+  }
+  const onSuccess = printResult;
+  const onError = printResult;
+  navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, inProgress, options);
+</script>
+</body>
+</html>
