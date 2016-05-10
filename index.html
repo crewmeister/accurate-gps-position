@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Accurate GPS position</title>
-  <script src="./index.min.js"></script>
 </head>
 <body>
 <h1>Accurate GPS Position</h1>
@@ -28,34 +27,6 @@
 <h2>Error?</h2>
 <pre id="error" style="color: red;">not yet...</pre>
 
-<script>
-  
-  var options = {
-    maxWait: 10000,
-    desiredAccuracy: 70,
-  };
-  document.getElementById('start').innerHTML = new Date() + '\nCalled with options:\n' + JSON.stringify(options, null, 4);
-
-  function stringifyObj(coords) {
-    var obj = {};
-    for (var key in coords) {
-      obj[key] = coords[key];
-    }
-    return JSON.stringify(obj, null, 4);
-  }
-  
-  function inProgress(pos) {
-    document.getElementById('progress').innerHTML += new Date() + '\n' + stringifyObj(pos.coords) + '\n';
-  }
-
-  function onSuccess(pos) {
-    document.getElementById('result').innerHTML = new Date() + '\n' + stringifyObj(pos.coords);
-  }
-  
-  function onError(err) {
-    document.getElementById('error').innerHTML = stringifyObj(err);
-  }
-  navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, inProgress, options);
-</script>
+<script src="./index.min.js" type="application/javascript"></script>
 </body>
 </html>
