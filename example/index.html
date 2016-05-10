@@ -16,7 +16,7 @@
 
 <script>
   
-  const options = {
+  var options = {
     maxWait: 60000,
     desiredAccuracy: 10,
   };
@@ -37,8 +37,8 @@
   function printResult(pos) {
     document.getElementById('result').innerHTML = new Date() + '\n' + stringifyCoords(pos.coords);
   }
-  const onSuccess = printResult;
-  const onError = printResult;
+  var onSuccess = printResult;
+  var onError = printResult;
   navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, inProgress, options);
 </script>
 </body>
