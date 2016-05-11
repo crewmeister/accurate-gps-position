@@ -6,7 +6,7 @@ is reached.
 
 Install it like this:
 ```bash
-npm install crewmeister/accurate-position
+npm install crewmeister/accurate-position --save-dev
 ```
 
 Use like this:
@@ -33,6 +33,27 @@ This crewmeister version is different to [the original](original-version) by [gw
 
 [gwilson]: https://github.com/gwilson
 [original-version]: https://github.com/gwilson/getAccurateCurrentPosition
+
+# Develop, work, hack ...
+
+You can clone like this:
+```bash
+> git clone https://github.com/crewmeister/accurate-position.git
+> cd accurate-position
+```
+and run the tests 
+```
+> npm test
+
+  ․․․․
+
+  4 passing (68ms)
+
+```
+
+If you want to run the examples and play with the examples page locally, just
+you can use `npm start` and go to the `http://<where-ever-this-repo-is-locally>/tmp/`
+and reload the example page.
 
 # THE ORIGINAL / OLD README is below
 
