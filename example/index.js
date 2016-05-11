@@ -1,4 +1,4 @@
-import { accurateCurrentPosition } from '../src/index';
+import { accurateCurrentPositionUsingCallbacks } from '../src/index';
 
 const options = {
   maxWait: 10000,
@@ -29,4 +29,4 @@ const onError = (err) => {
   document.getElementById('error').innerHTML = stringifyObj(err);
 };
 
-accurateCurrentPosition(onSuccess, onError, inProgress, options);
+accurateCurrentPositionUsingCallbacks(onSuccess, onError, inProgress, options);
