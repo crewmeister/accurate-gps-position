@@ -18,9 +18,14 @@ global.navigator = {geolocation: {
 }};
 
 describe('`accurateCurrentPosition()`', () => {
-  it('returns a promise', () => promiseThat(
-    successfulPosition(), fulfilled())
-  );
+  it('returns a promise', () => {
+    navigator.geolocation.watchPosition = (onSuccess, _, {}) => {
+      onSuccess({ coords: { accuracy: 1 } });
+      onSuccess({ coords: { accuracy: 1 } });
+    };
+    
+    return promiseThat(successfulPosition(), fulfilled())
+  });
 
   it('errors out when underlying GPS (`watchPosition()` fails)', () => {
     navigator.geolocation.watchPosition = (_, onError) => {
