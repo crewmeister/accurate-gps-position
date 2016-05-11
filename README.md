@@ -1,3 +1,34 @@
+# accurate-position
+
+This package offers a simple Promise-based function, for retreiving a more accurate position,
+by trying to read the position continuously for a given time and until a configurable accuracy (in meters)
+is reached.
+
+Use like this:
+```
+const TEN_SECONDS = 10 * 1000;
+const FIFTY_METERS = 50;
+accuratePosition({ maxWait: TEN_SECONDS, desiredAccuracy: FIFTY_METERS })
+  .then(position => console.log(position))
+  .catch(error => console.error(error))
+;
+```
+
+# What is different to the original version by gwilson?
+
+This crewmeister version is different to [the original](original-version) by [gwilson] version in the following parts:
+- `accuratePosition()` returns a Promise (missing progress support though!)
+- it is ES6
+- it has a basic set of tests (currently faking the `navigator.geolocation` functions)
+- it has an example, hosted at http://crewmeister.github.io/accurate-position
+- it auto-deploys the example page on every push to master
+- slight rename
+
+[gwilson]: https://github.com/gwilson
+[original-version]: https://github.com/gwilson/getAccurateCurrentPosition
+
+# THE ORIGINAL / OLD README is below
+
 getAccurateCurrentPosition
 ==========================
 <a href="https://github.com/gwilson/getAccurateCurrentPosition" target="_blank"><strong>getAccurateCurrentPosition()</strong></a> is a simple enhancement to <a href="http://dev.w3.org/geo/api/spec-source.html" target="_blank">navigator.geolocation</a> that provides a more accurate and predictable result.  It is intended for any geolocation-enabled web browser. This is also usable in PhoneGap applications since PhoneGap uses the underlying HTML geolocation APIs already. I have tested this on desktop Chrome, Safari, Firefox and on iOS and Android devices. I have not tested on IE9+ or Opera or Windows devices.
