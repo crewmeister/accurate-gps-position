@@ -53,9 +53,9 @@ export const _accurateCurrentPosition = (geolocationSuccess, geolocationError, g
   timerID = setTimeout(stopTrying, options.maxWait); // Set a timeout that will abandon the location loop
 };
 
-export const accurateCurrentPosition = () => {
+export const accurateCurrentPosition = (options) => {
   return new Promise((resolve, reject) => {
     const geoprogress = () => {};
-    _accurateCurrentPosition(resolve, reject, geoprogress, {});
+    _accurateCurrentPosition(resolve, reject, geoprogress, options);
   });  
 };

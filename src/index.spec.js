@@ -1,6 +1,7 @@
 import {
   promiseThat,
   fulfilled,
+  isFulfilledWith,
   rejected,
   assertThat,
   equalTo,
@@ -25,10 +26,9 @@ describe('`accurateCurrentPosition()`', () => {
       onSuccess({ coords: { accuracy: 1 } });
     };
     
-    return promiseThat(successfulPosition(), fulfilled())
+    return promiseThat(successfulPosition(), fulfilled());
   });
 
-  // the promise way
   it('errors out when underlying GPS (`watchPosition()` fails)', () => {
     navigator.geolocation.watchPosition = (_, onError) => {
       onError(Error('Damn'));
@@ -37,6 +37,18 @@ describe('`accurateCurrentPosition()`', () => {
     return promiseThat(
       accurateCurrentPosition({}),
       rejected()
+    );
+  });
+
+  it('returns when the desired accuracy was returned', () => {
+    navigator.geolocation.watchPosition = (onSuccess, _, {}) => {
+      onSuccess({ coords: { accuracy: 1000 } });
+      onSuccess({ coords: { accuracy: 42 } });
+    };
+
+    const options = { desiredAccuracy: 42 };
+    return promiseThat(accurateCurrentPosition(options),
+      isFulfilledWith({ coords: { accuracy: 42 } })
     );
   });
   
