@@ -2,7 +2,7 @@
 
 set -e
 
-TMP_CHECKOUT_DIR=tmp/origin-gh-pages
+TMP_CHECKOUT_DIR=tmp-origin-gh-pages
 (
   set -e
   git clone --branch=gh-pages "https://${GH_TOKEN}@${GH_REF}" $TMP_CHECKOUT_DIR
