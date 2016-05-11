@@ -1,4 +1,4 @@
-export const _accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogress, options) => {
+const _accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogress, options) => {
   const geolocation = navigator.geolocation;
   let lastCheckedPosition;
   let locationEventCount = 0;

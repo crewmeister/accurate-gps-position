@@ -8,7 +8,7 @@ import {
   hasProperty,
 } from 'hamjest';
 
-import { accurateCurrentPosition, _accurateCurrentPosition } from './index';
+import { accurateCurrentPosition } from './index';
 
 const successfulPosition = () =>
   accurateCurrentPosition();
