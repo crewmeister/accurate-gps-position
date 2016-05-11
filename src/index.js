@@ -1,4 +1,4 @@
-const _accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogress, options) => {
+export const accurateCurrentPositionUsingCallbacks = (geolocationSuccess, geolocationError, geoprogress, options) => {
   const geolocation = navigator.geolocation;
   let lastCheckedPosition;
   let locationEventCount = 0;
@@ -56,6 +56,6 @@ const _accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogr
 export const accurateCurrentPosition = (options) => {
   return new Promise((resolve, reject) => {
     const progress = () => {};
-    _accurateCurrentPosition(resolve, reject, progress, options);
+    accurateCurrentPositionUsingCallbacks(resolve, reject, progress, options);
   });  
 };
