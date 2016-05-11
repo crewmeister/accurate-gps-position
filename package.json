@@ -15,7 +15,7 @@
     "_start:example:html": "chokidar --initial 'example/*' -c 'npm run _build:example'",
     "prebuild": "npm run _create-dirs",
     "build": "npm run _build:js && npm run _build:example:js && npm run _build:example:html",
-    "_build:js": "browserify src/index.js --transform=babelify --outfile=dist/index.transpiled.js",
+    "_build:js": "browserify src/index.js --transform=babelify --outfile=dist/index.transpiled.js && cp dist/index.transpiled.js tmp",
     "_build:example:js": "browserify example/index.js --transform=babelify --outfile=tmp/index.js",
     "_build:example:html": "rm -r tmp/*.html 2>> /dev/null; cp -r example/*.html tmp",
     "watch:build": "nodemon --watch src --watch example --ext js,html,css --exec npm run build"
