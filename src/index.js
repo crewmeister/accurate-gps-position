@@ -55,7 +55,7 @@ const _accurateCurrentPosition = (geolocationSuccess, geolocationError, geoprogr
 
 export const accurateCurrentPosition = (options) => {
   return new Promise((resolve, reject) => {
-    const geoprogress = () => {};
-    _accurateCurrentPosition(resolve, reject, geoprogress, options);
+    const progress = () => {};
+    _accurateCurrentPosition(resolve, reject, progress, options);
   });  
 };
