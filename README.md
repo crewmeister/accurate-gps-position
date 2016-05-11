@@ -4,8 +4,15 @@ This package offers a simple Promise-based function, for retreiving a more accur
 by trying to read the position continuously for a given time and until a configurable accuracy (in meters)
 is reached.
 
-Use like this:
+Install it like this:
+```bash
+npm install crewmeister/accurate-position
 ```
+
+Use like this:
+```js
+import { accuratePosition } from 'accurate-position';
+
 const TEN_SECONDS = 10 * 1000;
 const FIFTY_METERS = 50;
 accuratePosition({ maxWait: TEN_SECONDS, desiredAccuracy: FIFTY_METERS })
