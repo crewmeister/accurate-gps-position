@@ -29,60 +29,74 @@ var onError = function onError(err) {
   document.getElementById('error').innerHTML = stringifyObj(err);
 };
 
-(0, _index.accurateCurrentPosition)(onSuccess, onError, inProgress, options);
+(0, _index.accurateCurrentPositionUsingCallbacks)(onSuccess, onError, inProgress, options);
 
 },{"../src/index":2}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-var accurateCurrentPosition = exports.accurateCurrentPosition = function accurateCurrentPosition(geolocationSuccess, geolocationError, geoprogress, options) {
-    var lastCheckedPosition,
-        locationEventCount = 0,
-        watchID,
-        timerID;
+var accurateCurrentPositionUsingCallbacks = exports.accurateCurrentPositionUsingCallbacks = function accurateCurrentPositionUsingCallbacks(geolocationSuccess, geolocationError, geoprogress, options) {
+  var geolocation = navigator.geolocation;
+  var lastCheckedPosition = void 0;
+  var locationEventCount = 0;
+  var watchID = void 0;
+  var timerID = void 0;
 
-    options = options || {};
+  options = options || {};
 
-    var checkLocation = function checkLocation(position) {
-        lastCheckedPosition = position;
-        locationEventCount = locationEventCount + 1;
-        // We ignore the first event unless it's the only one received because some devices seem to send a cached
-        // location even when maxaimumAge is set to zero
-        if (position.coords.accuracy <= options.desiredAccuracy && locationEventCount > 1) {
-            clearTimeout(timerID);
-            navigator.geolocation.clearWatch(watchID);
-            foundPosition(position);
-        } else {
-            geoprogress(position);
-        }
-    };
+  var checkLocation = function checkLocation(position) {
+    lastCheckedPosition = position;
+    locationEventCount = locationEventCount + 1;
+    // We ignore the first event unless it's the only one received because some devices seem to send a cached
+    // location even when maxaimumAge is set to zero
+    if (position.coords.accuracy <= options.desiredAccuracy && locationEventCount > 1) {
+      clearTimeout(timerID);
+      geolocation.clearWatch(watchID);
+      foundPosition(position);
+    } else {
+      geoprogress(position);
+    }
+  };
 
-    var stopTrying = function stopTrying() {
-        navigator.geolocation.clearWatch(watchID);
-        foundPosition(lastCheckedPosition);
-    };
+  var stopTrying = function stopTrying() {
+    geolocation.clearWatch(watchID);
+    foundPosition(lastCheckedPosition);
+  };
 
-    var onError = function onError(error) {
-        clearTimeout(timerID);
-        navigator.geolocation.clearWatch(watchID);
-        geolocationError(error);
-    };
+  var onError = function onError(error) {
+    clearTimeout(timerID);
+    geolocation.clearWatch(watchID);
+    geolocationError(error);
+  };
 
-    var foundPosition = function foundPosition(position) {
-        geolocationSuccess(position);
-    };
+  var foundPosition = function foundPosition(position) {
+    geolocationSuccess(position);
+  };
 
-    if (!options.maxWait) options.maxWait = 10000; // Default 10 seconds
-    if (!options.desiredAccuracy) options.desiredAccuracy = 20; // Default 20 meters
-    if (!options.timeout) options.timeout = options.maxWait; // Default to maxWait
+  if (!options.maxWait) {
+    options.maxWait = 10000;
+  } // Default 10 seconds
+  if (!options.desiredAccuracy) {
+    options.desiredAccuracy = 20;
+  } // Default 20 meters
+  if (!options.timeout) {
+    options.timeout = options.maxWait;
+  } // Default to maxWait
 
-    options.maximumAge = 0; // Force current locations only
-    options.enableHighAccuracy = true; // Force high accuracy (otherwise, why are you using this function?)
+  options.maximumAge = 0; // Force current locations only
+  options.enableHighAccuracy = true; // Force high accuracy (otherwise, why are you using this function?)
 
-    watchID = navigator.geolocation.watchPosition(checkLocation, onError, options);
-    timerID = setTimeout(stopTrying, options.maxWait); // Set a timeout that will abandon the location loop
+  watchID = geolocation.watchPosition(checkLocation, onError, options);
+  timerID = setTimeout(stopTrying, options.maxWait); // Set a timeout that will abandon the location loop
+};
+
+var accurateCurrentPosition = exports.accurateCurrentPosition = function accurateCurrentPosition(options) {
+  return new Promise(function (resolve, reject) {
+    var progress = function progress() {};
+    accurateCurrentPositionUsingCallbacks(resolve, reject, progress, options);
+  });
 };
 
 },{}]},{},[1]);
