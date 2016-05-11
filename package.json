@@ -2,20 +2,22 @@
   "name": "accurate-gps-position",
   "version": "2.0.0",
   "description": "Accurate GPS position retreival",
-  "main": "src/index.js",
+  "main": "dist/index.transpiled.js",
   "scripts": {
     "test": "mocha --compilers js:babel-register src/*spec.js src/**/*spec.js --bail --reporter=dot --slow=1",
     "watch:test": "npm run test -- --watch",
     "_create-dist-dir": "mkdir -p dist",
-    "prestart": "npm run _create-dist-dir",
-    "start": "concurrently 'npm run _start:js' 'npm run _start:example'",
-    "_start:js": "watchify --transform=babelify --outfile=dist/index.min.js example/index.js --verbose",
-    "_start:example": "chokidar --initial 'example/*' -c 'npm run _build:example'",
-    "prebuild": "npm run _create-dist-dir",
-    "build": "npm run _build:js && npm run _build:example",
-    "_build:js": "browserify example/index.js --transform=babelify --outfile=dist/index.js && npm run _minify-js",
-    "_build:example": "rm -r dist/*.html 2>> /dev/null; cp -r example/*.html dist",
-    "_minify-js": "uglifyjs dist/index.js -m -c > dist/index.min.js",
+    "_create-tmp-dir": "mkdir -p tmp",
+    "_create-dirs": "npm run _create-dist-dir; npm run _create-tmp-dir",
+    "prestart": "npm run _create-dirs",
+    "start": "concurrently 'npm run _start:example:js' 'npm run _start:example:html'",
+    "_start:example:js": "watchify --transform=babelify --outfile=tmp/index.js example/index.js --verbose",
+    "_start:example:html": "chokidar --initial 'example/*' -c 'npm run _build:example'",
+    "prebuild": "npm run _create-dirs",
+    "build": "npm run _build:js && npm run _build:example:js && npm run _build:example:html",
+    "_build:js": "browserify src/index.js --transform=babelify --outfile=dist/index.transpiled.js",
+    "_build:example:js": "browserify example/index.js --transform=babelify --outfile=tmp/index.js",
+    "_build:example:html": "rm -r tmp/*.html 2>> /dev/null; cp -r example/*.html tmp",
     "watch:build": "nodemon --watch src --watch example --ext js,html,css --exec npm run build"
   },
   "repository": {
@@ -46,7 +48,6 @@
     "hamjest": "^2.13.0",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.2",
-    "uglify-js": "^2.6.2",
     "watchify": "^3.7.0"
   }
 }
