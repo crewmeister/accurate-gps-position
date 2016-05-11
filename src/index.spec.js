@@ -1,6 +1,7 @@
 import {
   promiseThat,
   fulfilled,
+  rejected,
   assertThat,
   equalTo,
 } from 'hamjest';
@@ -27,7 +28,7 @@ describe('`accurateCurrentPosition()`', () => {
     return promiseThat(successfulPosition(), fulfilled())
   });
 
-  it('errors out when underlying GPS (`watchPosition()` fails)', () => {
+  it('errors out when underlying GPS (`watchPosition()` fails) - core', () => {
     navigator.geolocation.watchPosition = (_, onError) => {
       onError(Error('Damn'));
     };
@@ -40,6 +41,18 @@ describe('`accurateCurrentPosition()`', () => {
     _accurateCurrentPosition(noop, onError, {});
     
     assertThat(onError.wasCalled, equalTo(true));
+  });
+
+  // the promise way
+  it('errors out when underlying GPS (`watchPosition()` fails)', () => {
+    navigator.geolocation.watchPosition = (_, onError) => {
+      onError(Error('Damn'));
+    };
+    
+    return promiseThat(
+      accurateCurrentPosition({}),
+      rejected()
+    );
   });
   
 });
