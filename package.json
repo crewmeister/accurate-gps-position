@@ -1,7 +1,7 @@
 {
-  "name": "accurate-gps-position",
+  "name": "accurate-position",
   "version": "2.0.0",
-  "description": "Accurate GPS position retreival",
+  "description": "Accurate position retreival",
   "main": "dist/index.transpiled.js",
   "scripts": {
     "test": "mocha --compilers js:babel-register src/*spec.js src/**/*spec.js --bail --reporter=dot --slow=1",
@@ -22,17 +22,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/crewmeister/accurate-gps-position.git"
+    "url": "git+https://github.com/crewmeister/accurate-position.git"
   },
   "keywords": [
-    "gps"
+    "gps",
+    "position",
+    "geolocation"
   ],
-  "author": "Greg Wilson",
+  "author": "Greg Wilson, Wolfram Kriesing",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/crewmeister/accurate-gps-position/issues"
+    "url": "https://github.com/crewmeister/accurate-position/issues"
   },
-  "homepage": "https://github.com/crewmeister/accurate-gps-position#readme",
+  "homepage": "https://github.com/crewmeister/accurate-position#readme",
   "devDependencies": {
     "babel-cli": "^6.7.7",
     "babel-core": "^6.7.7",

@@ -6,4 +6,4 @@ if [ $# -eq 0 ]; then
   exit
 fi
 
-travis-encrypt -r crewmeister/accurate-gps-position GH_TOKEN=$1
+travis-encrypt -r crewmeister/accurate-position GH_TOKEN=$1

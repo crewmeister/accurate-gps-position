@@ -8,10 +8,10 @@ import {
   hasProperty,
 } from 'hamjest';
 
-import { accurateCurrentPosition } from './index';
+import { accuratePosition } from './index';
 
 const successfulPosition = () =>
-  accurateCurrentPosition();
+  accuratePosition();
 
 const noop = () => {};
 
@@ -20,7 +20,7 @@ global.navigator = {geolocation: {
   clearWatch: noop,
 }};
 
-describe('`accurateCurrentPosition()`', () => {
+describe('`accuratePosition()`', () => {
   it('returns a promise', () => {
     navigator.geolocation.watchPosition = (onSuccess, _, {}) => {
       onSuccess({ coords: { accuracy: 1 } });
@@ -30,13 +30,13 @@ describe('`accurateCurrentPosition()`', () => {
     return promiseThat(successfulPosition(), fulfilled());
   });
 
-  it('errors out when underlying GPS (`watchPosition()` fails)', () => {
+  it('errors out when underlying (`watchPosition()` fails)', () => {
     navigator.geolocation.watchPosition = (_, onError) => {
       onError(Error('Damn'));
     };
     
     return promiseThat(
-      accurateCurrentPosition({}),
+      accuratePosition({}),
       rejected()
     );
   });
@@ -51,7 +51,7 @@ describe('`accurateCurrentPosition()`', () => {
     };
 
     const options = { desiredAccuracy };
-    return promiseThat(accurateCurrentPosition(options),
+    return promiseThat(accuratePosition(options),
       isFulfilledWith({ coords: { accuracy: desiredAccuracy } })
     );
   });
@@ -68,7 +68,7 @@ describe('`accurateCurrentPosition()`', () => {
 
     const maxWait = 1;
     const options = { maxWait, desiredAccuracy };
-    return promiseThat(accurateCurrentPosition(options),
+    return promiseThat(accuratePosition(options),
       isFulfilledWith({ coords: { accuracy: finalAccuracy } })
     );
   });
