@@ -29,7 +29,7 @@ var onError = function onError(err) {
   document.getElementById('error').innerHTML = stringifyObj(err);
 };
 
-(0, _index.accurateCurrentPositionUsingCallbacks)(onSuccess, onError, inProgress, options);
+(0, _index.accuratePositionUsingCallbacks)(onSuccess, onError, inProgress, options);
 
 },{"../src/index":2}],2:[function(require,module,exports){
 "use strict";
@@ -37,7 +37,7 @@ var onError = function onError(err) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var accurateCurrentPositionUsingCallbacks = exports.accurateCurrentPositionUsingCallbacks = function accurateCurrentPositionUsingCallbacks(geolocationSuccess, geolocationError, geoprogress, options) {
+var accuratePositionUsingCallbacks = exports.accuratePositionUsingCallbacks = function accuratePositionUsingCallbacks(geolocationSuccess, geolocationError, geoprogress, options) {
   var geolocation = navigator.geolocation;
   var lastCheckedPosition = void 0;
   var locationEventCount = 0;
@@ -92,10 +92,10 @@ var accurateCurrentPositionUsingCallbacks = exports.accurateCurrentPositionUsing
   timerID = setTimeout(stopTrying, options.maxWait); // Set a timeout that will abandon the location loop
 };
 
-var accurateCurrentPosition = exports.accurateCurrentPosition = function accurateCurrentPosition(options) {
+var accuratePosition = exports.accuratePosition = function accuratePosition(options) {
   return new Promise(function (resolve, reject) {
     var progress = function progress() {};
-    accurateCurrentPositionUsingCallbacks(resolve, reject, progress, options);
+    accuratePositionUsingCallbacks(resolve, reject, progress, options);
   });
 };
 

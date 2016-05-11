@@ -4,7 +4,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var accurateCurrentPositionUsingCallbacks = exports.accurateCurrentPositionUsingCallbacks = function accurateCurrentPositionUsingCallbacks(geolocationSuccess, geolocationError, geoprogress, options) {
+var accuratePositionUsingCallbacks = exports.accuratePositionUsingCallbacks = function accuratePositionUsingCallbacks(geolocationSuccess, geolocationError, geoprogress, options) {
   var geolocation = navigator.geolocation;
   var lastCheckedPosition = void 0;
   var locationEventCount = 0;
@@ -59,10 +59,10 @@ var accurateCurrentPositionUsingCallbacks = exports.accurateCurrentPositionUsing
   timerID = setTimeout(stopTrying, options.maxWait); // Set a timeout that will abandon the location loop
 };
 
-var accurateCurrentPosition = exports.accurateCurrentPosition = function accurateCurrentPosition(options) {
+var accuratePosition = exports.accuratePosition = function accuratePosition(options) {
   return new Promise(function (resolve, reject) {
     var progress = function progress() {};
-    accurateCurrentPositionUsingCallbacks(resolve, reject, progress, options);
+    accuratePositionUsingCallbacks(resolve, reject, progress, options);
   });
 };
 
