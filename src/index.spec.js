@@ -28,21 +28,6 @@ describe('`accurateCurrentPosition()`', () => {
     return promiseThat(successfulPosition(), fulfilled())
   });
 
-  it('errors out when underlying GPS (`watchPosition()` fails) - core', () => {
-    navigator.geolocation.watchPosition = (_, onError) => {
-      onError(Error('Damn'));
-    };
-    
-    const onError = () => {
-      onError.wasCalled = true;
-    };
-    onError.wasCalled = false;
-    
-    _accurateCurrentPosition(noop, onError, {});
-    
-    assertThat(onError.wasCalled, equalTo(true));
-  });
-
   // the promise way
   it('errors out when underlying GPS (`watchPosition()` fails)', () => {
     navigator.geolocation.watchPosition = (_, onError) => {
